@@ -1,0 +1,28 @@
+{
+  "app_name": "Charity Tracker",
+  "actions" : {
+    "add": "Add",
+    "update": "Update",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "errors": {
+    "create_charity_error": "Sorry, there was a problem saving the entry. Please try again later.",
+    "update_charity_error": "Sorry, there was a problem updating the entry. Please try again later.",
+    "deleting_charity_error": "Sorry, there was a problem deleting the entry. Please try again later.",
+    "general_error": "Sorry, some error occurred. Please try again later.",
+    "error": "Error",
+    "no_data": "No Data"
+
+  },
+  "details" : {
+    "desc_hint": "Enter description",
+    "desc_label": "Description",
+    "amount_hint": "Enter amount",
+    "amount_label": "Amount"
+  },
+  "confirm": "Confirm",
+  "delete_confirmation_message": "Are you sure that you want to delete?",
+  "on": "On",
+  "by": "By"
+}
