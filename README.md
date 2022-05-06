@@ -7,7 +7,7 @@ towards a charity goal. Each member of a family can add his charity spending and
 
 A flutter mobile app to collaborate for charity. Work together towards a charity goal.
 
-![Charity Tracker App](https://raw.githubusercontent.com/hashirabdulbasheer/my_assets/master/charity_tracker_app.png)
+![Charity Tracker App](https://raw.githubusercontent.com/hashirabdulbasheer/my_assets/master/charity_tracker_app.png | width=200)
 
 # Dev Environment
 - Android Studio Arctic Fox | 2020.3.1 Patch 3
