@@ -8,4 +8,7 @@ class CharityConfig {
 
   static const String currency = "SAR";
 
+  // TODO: Replace with login and auth module
+  static const String currentUser = "hashir";
+
 }

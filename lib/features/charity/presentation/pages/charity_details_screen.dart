@@ -88,7 +88,7 @@ class _CharityDetailsScreenState extends State<CharityDetailsScreen> {
                                       amount: amountDouble,
                                       currency: CharityConfig.currency,
                                       date: CharityDateUtils.currentTimestamp,
-                                      createdBy: "hashir",
+                                      createdBy: CharityConfig.currentUser,
                                       type: _selectedType.rawValue(),
                                       key: widget.charity?.key ?? "");
                                   Navigator.of(context).pop(charity);
