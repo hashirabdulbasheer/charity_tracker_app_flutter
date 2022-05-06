@@ -138,6 +138,7 @@ class CharityScreen extends StatelessWidget {
       key: Key("${charity.date}"),
       background: Container(color: Colors.red),
       confirmDismiss: (direction) async {
+        CharityBloc charityBloc = BlocProvider.of<CharityBloc>(context);
         return showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -147,7 +148,7 @@ class CharityScreen extends StatelessWidget {
                 actions: <Widget>[
                   ElevatedButton(
                       onPressed: () {
-                        context.read<CharityBloc>().add(CharityDeleteEvent(charity: charity));
+                        charityBloc.add(CharityDeleteEvent(charity: charity));
                         Navigator.of(context).pop();
                       },
                       child: Text("actions.delete".tr())),
