@@ -31,11 +31,15 @@ class CharityBloc extends Bloc<CharityEvent, CharityState> {
       final response = await getAllUseCase.call(NoParams());
       if (response.isRight) {
         List<Charity> charities = response.right;
-        emit(CharityLoadedState(charities: charities, selectedType: CharityType.notAssigned));
+        emit(CharityLoadedState(
+            charities: charities,
+            totalAmount: _totalAmount(charities),
+            selectedType: CharityType.notAssigned));
       } else {
         GeneralFailure failure = response.left as GeneralFailure;
         emit(CharityErrorState(message: failure.message));
-        emit(const CharityLoadedState(charities: [], selectedType: CharityType.notAssigned));
+        emit(const CharityLoadedState(
+            charities: [], totalAmount: 0, selectedType: CharityType.notAssigned));
       }
     });
 
@@ -68,5 +72,13 @@ class CharityBloc extends Bloc<CharityEvent, CharityState> {
       }
       add(CharityLoadEvent());
     });
+  }
+
+  double _totalAmount(List<Charity> charities) {
+    double amount = 0;
+    for (Charity charity in charities) {
+      amount = amount + charity.amount;
+    }
+    return amount;
   }
 }

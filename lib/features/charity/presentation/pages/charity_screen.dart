@@ -60,17 +60,16 @@ class CharityScreen extends StatelessWidget {
   Widget _mainBody(BuildContext context, CharityLoadedState currentState) {
     return Column(
       children: [
-        // _headerWidget(state),
-        // const Divider(
-        //   color: Colors.green,
-        //   thickness: 2,
-        // ),
-
+        _headerWidget(currentState),
+        const Divider(color: Colors.green, thickness: 2),
         currentState.charities.isEmpty
             ? Expanded(child: Center(child: Text("errors.no_data".tr())))
             : Flexible(
-                child: ListView.builder(
+                child: ListView.separated(
                 itemCount: currentState.charities.length,
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
                 itemBuilder: (context, index) {
                   return _charityWidget(context, currentState.charities[index], currentState);
                 },
@@ -100,57 +99,37 @@ class CharityScreen extends StatelessWidget {
   }
 
   Widget _headerWidget(CharityLoadedState state) {
-    // return FutureBuilder<List<Charity>>(
-    //   future: state.charityDao.getAll(), // async work
-    //   builder: (BuildContext context, AsyncSnapshot<List<Charity>> snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.waiting:
-    //         return const Text('Loading....');
-    //       default:
-    //         if (snapshot.hasError) {
-    //           return Text('Error: ${snapshot.error}');
-    //         } else {
-    //           double total = 0;
-    //           List<Charity> charities = snapshot.data as List<Charity>;
-    //           for (Charity c in charities) {
-    //             total = total + c.amount;
-    //           }
-    //           return Padding(
-    //             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-    //             child: Center(
-    //               child: Row(
-    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                 children: [
-    //                   const Padding(
-    //                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-    //                     child: Text("TOTAL"),
-    //                   ),
-    //                   Row(
-    //                     mainAxisAlignment: MainAxisAlignment.end,
-    //                     crossAxisAlignment: CrossAxisAlignment.end,
-    //                     children: [
-    //                       Text(
-    //                         total.toStringAsFixed(2),
-    //                         style: const TextStyle(fontSize: 30),
-    //                       ),
-    //                       const Padding(
-    //                         padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
-    //                         child: Text(
-    //                           "SAR",
-    //                           style: TextStyle(fontSize: 14),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //           );
-    //         }
-    //     }
-    //   },
-    // );
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: Text("TOTAL"),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  state.totalAmount.toStringAsFixed(2),
+                  style: const TextStyle(fontSize: 30),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                  child: Text(
+                    "SAR",
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _charityWidget(BuildContext context, Charity charity, CharityLoadedState state) {

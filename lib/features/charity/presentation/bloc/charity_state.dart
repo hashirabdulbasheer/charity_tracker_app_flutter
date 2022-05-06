@@ -16,12 +16,14 @@ class CharityLoadingState extends CharityState {
 
 class CharityLoadedState extends CharityState {
   final List<Charity> charities;
+  final double totalAmount;
   final CharityType selectedType;
 
-  const CharityLoadedState({required this.charities, required this.selectedType});
+  const CharityLoadedState(
+      {required this.charities, required this.totalAmount, required this.selectedType});
 
   @override
-  List<Object> get props => [charities, selectedType];
+  List<Object> get props => [charities, selectedType, totalAmount];
 }
 
 class CharityErrorState extends CharityState {
