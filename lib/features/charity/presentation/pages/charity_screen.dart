@@ -7,19 +7,8 @@ import '../../domain/entities/charity.dart';
 import '../bloc/charity_bloc.dart';
 import 'charity_details_screen.dart';
 
-class CharityScreen extends StatefulWidget {
+class CharityScreen extends StatelessWidget {
   const CharityScreen({Key? key}) : super(key: key);
-
-  @override
-  CharityScreenState createState() => CharityScreenState();
-}
-
-class CharityScreenState extends State<CharityScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // _charityDao.getAll();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +45,7 @@ class CharityScreenState extends State<CharityScreen> {
         body: body,
         floatingActionButton: (state is CharityLoadedState)
             ? FloatingActionButton(
-                onPressed: () => _addCharity(),
+                onPressed: () => _addCharity(context),
                 tooltip: 'actions.add'.tr(),
                 child: const Icon(Icons.add))
             : null);
@@ -83,14 +72,14 @@ class CharityScreenState extends State<CharityScreen> {
                 child: ListView.builder(
                 itemCount: currentState.charities.length,
                 itemBuilder: (context, index) {
-                  return _charityWidget(currentState.charities[index], currentState);
+                  return _charityWidget(context, currentState.charities[index], currentState);
                 },
               ))
       ],
     );
   }
 
-  void _addCharity() {
+  void _addCharity(BuildContext context) {
     Navigator.of(context)
         .pushNamed(CharityDetailsScreen.routeName, arguments: null)
         .then((charity) {
@@ -100,7 +89,7 @@ class CharityScreenState extends State<CharityScreen> {
     });
   }
 
-  void _editCharity(Charity charity) {
+  void _editCharity(BuildContext context, Charity charity) {
     Navigator.of(context)
         .pushNamed(CharityDetailsScreen.routeName, arguments: charity)
         .then((charity) {
@@ -164,7 +153,7 @@ class CharityScreenState extends State<CharityScreen> {
     return Container();
   }
 
-  Widget _charityWidget(Charity charity, CharityLoadedState state) {
+  Widget _charityWidget(BuildContext context, Charity charity, CharityLoadedState state) {
     return Dismissible(
       onDismissed: (direction) {},
       key: Key("${charity.date}"),
@@ -193,7 +182,7 @@ class CharityScreenState extends State<CharityScreen> {
       },
       child: ListTile(
         onTap: () {
-          _editCharity(charity);
+          _editCharity(context, charity);
         },
         title: Padding(
           padding: const EdgeInsets.all(8.0),
