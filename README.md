@@ -7,7 +7,7 @@ towards a charity goal. Each member of a family can add his charity spending and
 
 A flutter mobile app to collaborate for charity. Work together towards a charity goal.
 
-[[https://raw.githubusercontent.com/hashirabdulbasheer/my_assets/master/charity_tracker_app.png | width=200px]]
+<img src="https://raw.githubusercontent.com/hashirabdulbasheer/my_assets/master/charity_tracker_app.png" width="25%">
 
 # Dev Environment
 - Android Studio Arctic Fox | 2020.3.1 Patch 3
@@ -45,4 +45,5 @@ samples, guidance on mobile development, and a full API reference.
 
 # Generate Translations
 flutter pub run easy_localization:generate --source-dir ./assets/translations --output-dir ./lib/core/misc
+
 
