@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,7 +124,7 @@ class CharityScreen extends StatelessWidget {
       onDismissed: (direction) {},
       key: Key("${charity.date}"),
       background: Container(color: Colors.red),
-      confirmDismiss: (direction)  => _deleteCharity(context, charity),
+      confirmDismiss: (direction) => _deleteCharity(context, charity),
       child: ListTile(
         onTap: () {
           _editCharity(context, charity);
@@ -163,10 +164,22 @@ class CharityScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(charity.formattedAmount, style: const TextStyle(fontSize: 40)),
+                        SizedBox(
+                          width: 120,
+                          child: AutoSizeText(
+                            wrapWords: false,
+                            charity.formattedAmount,
+                            style: const TextStyle(fontSize: 40),
+                            overflow: TextOverflow.fade,
+                          ),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 0, 8),
-                          child: Text(charity.currency, style: const TextStyle(fontSize: 14)),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 0, 5),
+                          child: Text(
+                            charity.currency,
+                            style: const TextStyle(fontSize: 14),
+                            overflow: TextOverflow.clip,
+                          ),
                         ),
                       ],
                     ),
@@ -192,7 +205,7 @@ class CharityScreen extends StatelessWidget {
   /// Add action
   void _addCharity(BuildContext context) {
     CharityDetailsScreenArguments args =
-    CharityDetailsScreenArguments(charity: null, isEditAllowed: true);
+        CharityDetailsScreenArguments(charity: null, isEditAllowed: true);
     Navigator.of(context)
         .pushNamed(CharityDetailsScreen.routeName, arguments: args)
         .then((charity) {
@@ -206,7 +219,7 @@ class CharityScreen extends StatelessWidget {
   void _editCharity(BuildContext context, Charity charity) {
     bool isEditAllowed = context.read<CharityBloc>().isEditAllowed(charity);
     CharityDetailsScreenArguments args =
-    CharityDetailsScreenArguments(charity: charity, isEditAllowed: isEditAllowed);
+        CharityDetailsScreenArguments(charity: charity, isEditAllowed: isEditAllowed);
     Navigator.of(context)
         .pushNamed(CharityDetailsScreen.routeName, arguments: args)
         .then((charity) {
@@ -246,5 +259,4 @@ class CharityScreen extends StatelessWidget {
           );
         });
   }
-
 }
