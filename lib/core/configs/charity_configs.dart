@@ -9,7 +9,7 @@ class CharityConfig {
   static const String currency = "SAR";
 
   // TODO: Replace with login and auth module
-  static const String currentUser = "hashir";
+  static const String currentUser = "Hashir";
 
   // TODO: Replace with filters later on
   static const String startDate = '2022-05-01 – 01:00';
