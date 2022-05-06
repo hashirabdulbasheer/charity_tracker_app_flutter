@@ -79,8 +79,10 @@ class CharityScreen extends StatelessWidget {
   }
 
   void _addCharity(BuildContext context) {
+    CharityDetailsScreenArguments args =
+        CharityDetailsScreenArguments(charity: null, isEditAllowed: true);
     Navigator.of(context)
-        .pushNamed(CharityDetailsScreen.routeName, arguments: null)
+        .pushNamed(CharityDetailsScreen.routeName, arguments: args)
         .then((charity) {
       if (charity != null) {
         context.read<CharityBloc>().add(CharityAddEvent(charity: charity as Charity));
@@ -89,8 +91,11 @@ class CharityScreen extends StatelessWidget {
   }
 
   void _editCharity(BuildContext context, Charity charity) {
+    bool isEditAllowed = context.read<CharityBloc>().isEditAllowed(charity);
+    CharityDetailsScreenArguments args =
+        CharityDetailsScreenArguments(charity: charity, isEditAllowed: isEditAllowed);
     Navigator.of(context)
-        .pushNamed(CharityDetailsScreen.routeName, arguments: charity)
+        .pushNamed(CharityDetailsScreen.routeName, arguments: args)
         .then((charity) {
       if (charity != null) {
         context.read<CharityBloc>().add(CharityUpdateEvent(charity: charity as Charity));
@@ -139,6 +144,12 @@ class CharityScreen extends StatelessWidget {
       background: Container(color: Colors.red),
       confirmDismiss: (direction) async {
         CharityBloc charityBloc = BlocProvider.of<CharityBloc>(context);
+        bool isEditAllowed = charityBloc.isEditAllowed(charity);
+        if (!isEditAllowed) {
+          // only allow delete if edit is allowed
+          return null;
+        }
+
         return showDialog(
             context: context,
             builder: (BuildContext context) {

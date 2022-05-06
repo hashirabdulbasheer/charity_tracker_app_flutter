@@ -4,7 +4,8 @@
     "add": "Add",
     "update": "Update",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "details": "Details"
   },
   "errors": {
     "create_charity_error": "Sorry, there was a problem saving the entry. Please try again later.",

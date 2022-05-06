@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../features/charity/domain/entities/charity.dart';
 import '../../features/charity/presentation/bloc/charity_bloc.dart';
 import '../../features/charity/presentation/pages/charity_details_screen.dart';
 import '../../features/charity/presentation/pages/charity_screen.dart';
@@ -12,11 +10,14 @@ class CharityRouteGenerator {
     switch (settings.name) {
       case CharityDetailsScreen.routeName:
         if (settings.arguments != null) {
-          Charity? charity = settings.arguments as Charity;
-          final page = CharityDetailsScreen(charity: charity);
+          CharityDetailsScreenArguments args = settings.arguments as CharityDetailsScreenArguments;
+          final page = CharityDetailsScreen(
+            charity: args.charity,
+            isEditAllowed: args.isEditAllowed,
+          );
           return MaterialPageRoute(builder: (context) => page);
         } else {
-          const page = CharityDetailsScreen(charity: null);
+          const page = CharityDetailsScreen(charity: null, isEditAllowed: true);
           return MaterialPageRoute(builder: (context) => page);
         }
 

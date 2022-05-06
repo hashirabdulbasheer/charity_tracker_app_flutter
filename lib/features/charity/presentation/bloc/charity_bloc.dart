@@ -1,3 +1,4 @@
+import 'package:charity_tracker/core/configs/charity_configs.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,6 +73,14 @@ class CharityBloc extends Bloc<CharityEvent, CharityState> {
       }
       add(CharityLoadEvent());
     });
+  }
+
+  bool isEditAllowed(Charity charity) {
+    // only allow edit if the entry was created by the logged in user
+    if (CharityConfig.currentUser.toLowerCase() == charity.createdBy.toLowerCase()) {
+      return true;
+    }
+    return false;
   }
 
   double _totalAmount(List<Charity> charities) {

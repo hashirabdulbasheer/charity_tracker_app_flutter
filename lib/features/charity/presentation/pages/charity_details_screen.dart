@@ -7,11 +7,20 @@ import '../../../../core/misc/date_utils.dart';
 import '../../data/models/mappers/charity_mappers.dart';
 import '../../domain/entities/charity.dart';
 
+class CharityDetailsScreenArguments {
+  final Charity? charity;
+  final bool isEditAllowed;
+
+  CharityDetailsScreenArguments({this.charity, required this.isEditAllowed});
+}
+
 class CharityDetailsScreen extends StatefulWidget {
   static const routeName = '/details';
   final Charity? charity;
+  final bool isEditAllowed;
 
-  const CharityDetailsScreen({Key? key, this.charity}) : super(key: key);
+  const CharityDetailsScreen({Key? key, this.charity, required this.isEditAllowed})
+      : super(key: key);
 
   @override
   State<CharityDetailsScreen> createState() => _CharityDetailsScreenState();
@@ -42,6 +51,7 @@ class _CharityDetailsScreenState extends State<CharityDetailsScreen> {
             child: Column(
               children: [
                 TextField(
+                    enabled: widget.isEditAllowed,
                     controller: _descriptionController,
                     decoration: InputDecoration(
                         hintText: "details.desc_hint".tr(), labelText: "details.desc_label".tr()),
@@ -49,6 +59,7 @@ class _CharityDetailsScreenState extends State<CharityDetailsScreen> {
                     keyboardType: TextInputType.text),
                 const SizedBox(height: 10),
                 TextField(
+                    enabled: widget.isEditAllowed,
                     controller: _amountController,
                     decoration: InputDecoration(
                         hintText: "details.amount_hint".tr(),
@@ -62,9 +73,11 @@ class _CharityDetailsScreenState extends State<CharityDetailsScreen> {
                       child: DropdownButton<CharityType>(
                           items: _dropdownItems,
                           onChanged: (value) {
-                            setState(() {
-                              _selectedType = value ?? CharityType.notAssigned;
-                            });
+                            if (widget.isEditAllowed) {
+                              setState(() {
+                                _selectedType = value ?? CharityType.notAssigned;
+                              });
+                            }
                           },
                           value: _selectedType,
                           isExpanded: true),
@@ -72,32 +85,34 @@ class _CharityDetailsScreenState extends State<CharityDetailsScreen> {
                   ],
                 ),
                 const SizedBox(height: 50),
-                Row(
-                  children: [
-                    Expanded(
-                        child: ElevatedButton(
-                            onPressed: () {
-                              String desc = _descriptionController.text;
-                              String amount = _amountController.text;
-                              if (desc != "" && amount != "") {
-                                double amountDouble = 0.0;
-                                try {
-                                  amountDouble = double.parse(amount);
-                                  Charity charity = Charity(
-                                      description: desc,
-                                      amount: amountDouble,
-                                      currency: CharityConfig.currency,
-                                      date: CharityDateUtils.currentTimestamp,
-                                      createdBy: CharityConfig.currentUser,
-                                      type: _selectedType.rawValue(),
-                                      key: widget.charity?.key ?? "");
-                                  Navigator.of(context).pop(charity);
-                                } catch (_) {}
-                              }
-                            },
-                            child: Text(_title))),
-                  ],
-                )
+                widget.isEditAllowed
+                    ? Row(
+                        children: [
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    String desc = _descriptionController.text;
+                                    String amount = _amountController.text;
+                                    if (desc != "" && amount != "") {
+                                      double amountDouble = 0.0;
+                                      try {
+                                        amountDouble = double.parse(amount);
+                                        Charity charity = Charity(
+                                            description: desc,
+                                            amount: amountDouble,
+                                            currency: CharityConfig.currency,
+                                            date: CharityDateUtils.currentTimestamp,
+                                            createdBy: CharityConfig.currentUser,
+                                            type: _selectedType.rawValue(),
+                                            key: widget.charity?.key ?? "");
+                                        Navigator.of(context).pop(charity);
+                                      } catch (_) {}
+                                    }
+                                  },
+                                  child: Text(_title))),
+                        ],
+                      )
+                    : Container()
               ],
             ),
           ),
@@ -116,6 +131,11 @@ class _CharityDetailsScreenState extends State<CharityDetailsScreen> {
   }
 
   String get _title {
+    if (!widget.isEditAllowed) {
+      // edit is not allowed, so display title based on that
+      return "actions.details".tr();
+    }
+    // edit is allowed, so display title based on action
     if (widget.charity == null) {
       return "actions.add".tr();
     }
