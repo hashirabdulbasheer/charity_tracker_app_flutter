@@ -1,3 +1,4 @@
+import 'package:charity_tracker/core/misc/date_utils.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../../../core/base_classes/responses.dart';
 import '../../../../core/configs/charity_configs.dart';
@@ -81,6 +82,9 @@ class CharityFirebaseDataSourceImpl extends CharityFirebaseDataSource {
           charities.add(charity);
         }
       }
+      // applying date filter
+      int startDateTimestamp = CharityDateUtils.timestampFromString(CharityConfig.startDate);
+      charities = charities.where((element) => element.date >= startDateTimestamp).toList();
       return CharityResponse(isSuccessful: true, successObject: charities);
     } catch (error) {
       return CharityResponse(isSuccessful: false, errorMessage: error.toString());
