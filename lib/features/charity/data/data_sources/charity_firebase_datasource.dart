@@ -85,6 +85,7 @@ class CharityFirebaseDataSourceImpl extends CharityFirebaseDataSource {
       // applying date filter
       int startDateTimestamp = CharityDateUtils.timestampFromString(CharityConfig.startDate);
       charities = charities.where((element) => element.date >= startDateTimestamp).toList();
+      charities.sort((a, b) => b.date.compareTo(a.date));
       return CharityResponse(isSuccessful: true, successObject: charities);
     } catch (error) {
       return CharityResponse(isSuccessful: false, errorMessage: error.toString());
