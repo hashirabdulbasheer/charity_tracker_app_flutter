@@ -74,9 +74,9 @@ class CharityFirebaseDataSourceImpl extends CharityFirebaseDataSource {
   Future<CharityResponse> getAll() async {
     try {
       List<CharityApiModel> charities = [];
-      DataSnapshot snapshot = await _messagesRef.once();
-      if (snapshot.value != null) {
-        for (var val in snapshot.value.entries) {
+      DatabaseEvent event = await _messagesRef.once();
+      if (event.snapshot.value != null) {
+        for (var val in (event.snapshot.value as Map).entries) {
           CharityApiModel charity = CharityApiModel.fromJson(val.value);
           charity.key = val.key;
           charities.add(charity);

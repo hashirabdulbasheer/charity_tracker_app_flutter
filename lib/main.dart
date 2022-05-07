@@ -7,9 +7,9 @@ void main() async {
   await CharityGlobals.initialize();
   runApp(
     EasyLocalization(
-        supportedLocales: const [Locale('en', '')],
+        supportedLocales: const [Locale('en', 'US')],
         path: 'assets/translations',
-        fallbackLocale: const Locale('en', ''),
+        fallbackLocale: const Locale('en', 'US'),
         child: const MyApp()),
   );
 }
