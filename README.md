@@ -9,6 +9,8 @@ A flutter mobile app to collaborate for charity. Work together towards a charity
 
 <img src="https://raw.githubusercontent.com/hashirabdulbasheer/my_assets/master/charity_tracker_app.png" width="25%">
 
+[Click Here for a video demo](https://www.youtube.com/watch?v=aT59hIctwB8)
+
 # Dev Environment
 - Android Studio Arctic Fox | 2020.3.1 Patch 3
 - Flutter version : Flutter 2.13.0-0.0.pre.548 • channel master
